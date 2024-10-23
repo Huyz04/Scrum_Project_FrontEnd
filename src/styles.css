@@ -271,6 +271,17 @@ h2 {
     padding-top: 20px;
     border-top: 1px solid #ddd;
 }
+.form-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.form-group input,
+.form-group textarea {
+    font-size: 1.1rem;
+    padding: 0.5rem;
+}
 
 @media (max-width: 768px) {
     .campaign-grid {
