@@ -1,0 +1,210 @@
+/* Reset margin cho body */
+body {
+    height: 100vh; /* Đảm bảo body chiếm toàn bộ chiều cao cửa sổ */
+    margin: 0; /* Xóa margin mặc định */
+    background: linear-gradient(to right, rgb(88, 208, 88), rgb(223, 215, 215)); /* Màu gradient */
+    font-family: Arial, sans-serif; /* Thêm font mặc định */
+}
+
+/* Thiết lập cho header */
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* Nhóm phần đầu */
+.header-logo {
+    flex: 1;
+}
+
+/* Nội dung phần đầu */
+.header-title {
+    flex: 20;
+
+}
+.title {
+    color: rgb(199, 147, 48);
+    font-weight: italic;
+}
+
+/* Định dạng tiêu đề */
+h1 {
+    font-size: 40px;
+}
+
+/* Thiết lập cho các cột */
+.content-container {
+    display: flex;
+    width: 100%;
+}
+
+.text-column {
+    width: 50%;
+    padding: 15px;
+}
+
+/* Nhóm văn bản */
+.text-content,
+.logos-container,
+.image-gallery {
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+.text-content {
+    font-weight: 500; /* Sửa trọng số để dễ đọc hơn */
+}
+
+.logos-container {
+    display: flex;
+    font-weight: 100; /* Sửa trọng số để dễ đọc hơn */
+}
+
+/* Định dạng văn bản */
+.text-content > p {
+    font-style: italic;
+}
+
+/* Thiết lập cho cột hình ảnh */
+.image-column {
+    background-image: url('./avatar.png'); /* Đường dẫn đến hình ảnh */
+    background-size: cover; /* Điều chỉnh kích thước hình ảnh */
+    background-position: center; /* Đặt hình ảnh ở giữa */
+    height: 500px; /* Chiều cao của phần tử */
+    width: 50%; /* Chiều rộng của phần tử */
+    border-radius: 50px;
+    margin-right: 5px;
+}
+
+/* Nút tham gia */
+.join-button {
+    height: 50px;
+    width: 150px;
+    border-radius: 50px;
+    background-color: rgb(43, 128, 135);
+    color: white;
+    display: flex; /* Căn giữa nội dung trong nút */
+    justify-content: center;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    cursor: pointer; /* Thêm con trỏ để cho biết đây là nút bấm */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu khi hover */
+}
+
+.join-button:hover {
+    background-color: rgb(36, 102, 105); /* Màu sắc khi hover */
+}
+/* Thiết lập cho hình ảnh */
+.logo-image {
+    height: 50px; /* Chiều cao cho hình ảnh logo */
+    margin: 10px;
+}
+.menu-image {
+    height: 50px;
+    margin: 10px;
+}
+.menu-button {
+    background-color: transparent;
+    border: none
+}
+.campaign-gallery {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: center; /* Center items */
+}
+
+.campaign-item {
+    position: relative; /* Needed for absolute positioning */
+    text-align: center;
+    margin: 10px;
+}
+
+.campaign-photo-container {
+    position: relative; /* Set this to relative for absolute positioning of the button */
+}
+
+.campaign-photo {
+    height: 300px;
+    width: 350px;
+    border-radius: 50px;
+}
+
+.campaign-button {
+    height: 50px;
+    width: 250px;
+    border-radius: 50px;
+    background-color: rgb(43, 128, 135);
+    color: white;
+}
+
+.campaign-button:hover {
+    background-color: rgb(36, 102, 105); /* Change on hover */
+}
+.time-content {
+    display: flex; /* Use flexbox to align items */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    margin-top: 5px; /* Optional: space between title and time content */
+}
+
+.time-image {
+    margin-right: 5px; /* Space between the image and text */
+    height: 20px; /* Adjust height as needed */
+    width: auto; /* Maintain aspect ratio */
+}
+
+.time-text {
+    font-size: 16px; /* Adjust font size as needed */
+    text-align: center; /* Ensure text is centered */
+}
+.footer {
+    background: #f5f5f5;
+    padding: 40px 0 20px;
+    margin-top: 60px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.footer-section h4 {
+    color: #333;
+    margin-bottom: 15px;
+}
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-link {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.social-link:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+.search-bar {
+    margin-left: auto;
+    margin-right: 20px;
+    padding: 0.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    width: 200px;
+    font-family: 'Lexend', sans-serif;
+}
+
