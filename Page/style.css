@@ -17,7 +17,7 @@
 }
 
 body {
-    background-image: url('../assets/background.png');
+    background-image: url('../Public/assets/background.png');
     background-size: cover;
     background-position: center;
     padding: 20px;
@@ -208,8 +208,8 @@ h2 {
     transition: background-color 0.3s;
 }
 
-.cancelled-button {
-    background-color: #f33a21;
+.accepted-button {
+    background-color: #0b7212;
     color: white;
     padding: 0.75rem 1.5rem;
     border-radius: 25px;
