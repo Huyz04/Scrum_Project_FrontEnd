@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box; /* Giúp quản lý kích thước dễ hơn */
+  margin: 0; /* Bỏ margin mặc định */
+  padding: 0; /* Bỏ padding mặc định */
+}
+
 .vector-icon {
   position: absolute;
   top: 1920px;
@@ -657,12 +663,13 @@
 }
 .mask-group-icon {
   position: absolute;
-  top: 0px;
-  left: 720px;
-  width: 720px;
-  height: 507px;
-  object-fit: cover;
+  top: 0; /* Giữ nguyên khoảng cách từ trên */
+  right: 0; /* Căn từ bên phải */
+  width: 720px; /* Chiều rộng */
+  height: 507px; /* Chiều cao */
 }
+
+
 .category {
   position: absolute;
   top: 0px;
