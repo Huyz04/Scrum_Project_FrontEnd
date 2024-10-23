@@ -1,3 +1,4 @@
 {
-    "livePreview.defaultPreviewPath": "/components/Header.html"
+    "livePreview.defaultPreviewPath": "/components/Header.html",
+    "liveServer.settings.port": 5501
 }

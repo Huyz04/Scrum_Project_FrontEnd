@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Kí Chiến Sĩ - Mùa Hè Xanh 2025</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/Page/style.css">
 </head>
 <body>
     <div class="container">
         <div class="hero-content">
         <header>
-            <img src="../assets/logo.png" alt="Mùa Hè Xanh 2025 Logo" class="logo">
+            <img src="/Public/assets/logo.png" alt="Mùa Hè Xanh 2025 Logo" class="logo">
             <h2>ĐĂNG KÍ CHIẾN SĨ</h2>
         </header>
         
@@ -68,7 +68,7 @@
 
     <footer id="footer-placeholder"></footer>
     <script>
-        fetch('../components/Footer.html')
+        fetch('/Page/Component/Footer.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('footer-placeholder').innerHTML = data;

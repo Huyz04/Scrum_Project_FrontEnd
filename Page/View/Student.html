@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mùa Hè Xanh UIT 2025</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/Page/style.css">
     
 </head>
 <body>
@@ -72,14 +72,14 @@
         <footer id="footer-placeholder"></footer>
     </main>
     <script>
-        fetch('../components/Header.html')
+        fetch('/Page/Component/Header.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('header-placeholder').innerHTML = data;
             });
     </script>
     <script>
-        fetch('../components/Footer.html')
+        fetch('/Page/Component/Footer.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('footer-placeholder').innerHTML = data;
