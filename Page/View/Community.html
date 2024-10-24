@@ -14,14 +14,14 @@
 <header class="header">
     <img src="/Public/assets/logo.png" alt="Logo Mùa Hè Xanh" class="logo">
     <h2> Mùa hè xanh UIT 2025</h2>
-    <input type="search" placeholder="Tìm kiếm..." class="search-bar">
+    <button id ="log-out" class ="log-out-btn">Đăng xuất</button>
 </header>
 
 <main>
     <section class="hero">
         <div class="hero-content">
             <h1>Phủ Xanh Mùa Hè<br>Cùng Mùa Hè Xanh</h1>
-            <p class="hero-text">Nơi những chiến sĩ áo xanh cùng nhau cống hiến tri thức trẻ,<br>góp phần dựng xây quê hương, đất nước vững mạnh.</p>
+            <p class="hero-text">Một mùa hè nữa lại đến, nổi bật giữa bức tranh mùa hè là hình ảnh những sinh viên tình nguyện mang sức trẻ, nhiệt huyết, hăng hái tham gia các hoạt động ý nghĩa, góp phần lan tỏa tinh thần vì cộng đồng. Mùa Hè Xanh là nơi những chiến sĩ áo xanh cùng nhau cống hiến tri thức trẻ, góp phần dựng xây quê hương, đất nước tươi đẹp, vững mạnh.</p>
             <button id = 'createCampaignBtn' class="create-project-btn">Tạo dự án</button>
             <p class="hero-text">Đơn vị đồng hành</p>
             
@@ -52,7 +52,20 @@
     border-radius: 25px; /* Bo tròn góc nhiều hơn */
     transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
 }
-
+.log-out-btn {
+    background-color: #d62a2a; /* Màu xanh lá */
+    color: white; /* Màu chữ */
+    border: none; /* Không có viền */
+    padding: 10px 20px; /* Khoảng cách bên trong */
+    text-align: center; /* Căn giữa chữ */
+    text-decoration: none; /* Không có gạch chân */
+    display: inline-block; /* Hiển thị như một khối inline */
+    font-size: 16px; /* Kích thước chữ */
+    margin: 4px 2px; /* Khoảng cách bên ngoài */
+    cursor: pointer; /* Con trỏ chuột thay đổi khi hover */
+    border-radius: 25px; /* Bo tròn góc nhiều hơn */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
+}
 .create-project-btn:hover {
     background-color: #45a049; /* Màu xanh đậm hơn khi hover */
 }
@@ -83,7 +96,7 @@
         }
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 0px;
             font-weight: bold;
         }
         .btn-cancel, .btn-submit {
@@ -212,7 +225,7 @@
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-bottom: 20px;
+        margin: auto;
     }
 
     table, th, td {
@@ -234,7 +247,6 @@
         <section class="campaigns">
             <div class="campaigns-header">
                 <div class="campaigns-title">
-                    <span class="category-label">Mùa Hè Xanh UIT</span>
                     <br></br>
                     <h2>Các Chiến Dịch ĐÃ DUYỆT</h2>
                 </div>
@@ -284,7 +296,34 @@
                     <!-- Nội dung sinh viên sẽ được thêm bằng JavaScript -->
                 </tbody>
             </table>
+
+            <br></br>
+            <div class="campaigns-header">
+                <div class="campaigns-title">
+                    <br></br>
+                    <h2>Các Sinh viên ĐÃ DUYỆT</h2>
+                </div>
+            </div>
+            <table id="student-table-ok">
+                <thead>
+                    <tr>
+                        <th>Chiến dịch</th>
+                        <th>Tên</th>
+                        <th>MSSV</th>
+                        <th>SĐT</th>
+                        <th>Email</th>
+                        <th>Địa chỉ</th>
+                        <th>SĐT Phụ huynh</th>
+                        <th>Lý do tham gia</th>
+                        <th>Mục tiêu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Nội dung sinh viên sẽ được thêm bằng JavaScript -->
+                </tbody>
+            </table>
         </section>
+
         <footer id="footer-placeholder"></footer>
     </main>
     <div class="overlay" id="overlay"></div>
@@ -413,7 +452,6 @@
         })
         
         .catch(error => console.error("Lỗi khi gọi API:", error));
-
     </script>
      <script>
         
@@ -539,13 +577,13 @@ function openModal(campaignId) {
         .then(campaigns => {
             const campaign = campaigns.find(c => c.id === campaignId);
             if (campaign) {
-                document.getElementById(`campaignName-${campaignId}`).innerText = `Tên đội hình: ${campaign.name}`;
-                document.getElementById(`campaignUniversity-${campaignId}`).innerText = `Trường Đại học: ${campaign.university}`;
-                document.getElementById(`campaignDescription-${campaignId}`).innerText = `Mô tả: ${campaign.description}`;
-                document.getElementById(`campaignQuantity-${campaignId}`).innerText = `Số lượng chiến sĩ: ${campaign.quantity}`;
-                document.getElementById(`campaignTime-${campaignId}`).innerText = `Thời gian: ${campaign.time}`;  // Hiển thị time dạng string
-                document.getElementById(`campaignCreatedAt-${campaignId}`).innerText = `Chiến dịch được tạo lúc: ${new Date(campaign.createdAt).toLocaleString()}`;
-                document.getElementById(`campaignStatus-${campaignId}`).innerText = `Trạng thái: ${campaign.status}`;
+                document.getElementById(`campaignName-${campaignId}`).innerHTML = `Tên đội hình: ${campaign.name}`;
+                document.getElementById(`campaignUniversity-${campaignId}`).innerHTML = `Trường Đại học: ${campaign.university}`;
+                document.getElementById(`campaignDescription-${campaignId}`).innerHTML = `Mô tả: ${campaign.description}`;
+                document.getElementById(`campaignQuantity-${campaignId}`).innerHTML = `Số lượng chiến sĩ: ${campaign.quantity}`;
+                document.getElementById(`campaignTime-${campaignId}`).innerHTML = `Thời gian: ${campaign.time}`;  // Hiển thị time dạng string
+                document.getElementById(`campaignCreatedAt-${campaignId}`).innerHTML = `Chiến dịch được tạo lúc: ${new Date(campaign.createdAt).toLocaleString()}`;
+                document.getElementById(`campaignStatus-${campaignId}`).innerHTML = `Trạng thái: ${campaign.status}`;
 
                 document.getElementById(`campaignDetailModal-${campaignId}`).style.display = "block";
             }
@@ -588,7 +626,9 @@ window.onload = loadCampaigns;
         if (response.ok) {
             // Xử lý khi thành công
             alert('Chiến dịch đã được tạo thành công!');
-            document.getElementById('cancelBtn').click(); // Đóng dialog sau khi tạo thành công
+            document.getElementById('cancelBtn').click(); 
+            location.reload();
+            // Đóng dialog sau khi tạo thành công
         } else {
             // Xử lý khi có lỗi từ API
             const errorMessage = await response.json();
@@ -671,13 +711,13 @@ function openModal(campaignId) {
         .then(campaigns => {
             const campaign = campaigns.find(c => c.id === campaignId);
             if (campaign) {
-                document.getElementById(`campaignName-${campaignId}`).innerText = `Tên đội hình: ${campaign.name}`;
-                document.getElementById(`campaignUniversity-${campaignId}`).innerText = `Trường Đại học: ${campaign.university}`;
-                document.getElementById(`campaignDescription-${campaignId}`).innerText = `Mô tả: ${campaign.description}`;
-                document.getElementById(`campaignQuantity-${campaignId}`).innerText = `Số lượng chiến sĩ: ${campaign.quantity}`;
-                document.getElementById(`campaignTime-${campaignId}`).innerText = `Thời gian: ${campaign.time}`;  // Hiển thị time dạng string
-                document.getElementById(`campaignCreatedAt-${campaignId}`).innerText = `Chiến dịch được tạo lúc: ${new Date(campaign.createdAt).toLocaleString()}`;
-                document.getElementById(`campaignStatus-${campaignId}`).innerText = `Trạng thái: ${campaign.status}`;
+                document.getElementById(`campaignName-${campaignId}`).innerHTML = `Tên đội hình: ${campaign.name}`;
+                document.getElementById(`campaignUniversity-${campaignId}`).innerHTML = `<b>Trường Đại học: </b> ${campaign.university}`;
+                document.getElementById(`campaignDescription-${campaignId}`).innerHTML = `<b>Mô tả: </b> ${campaign.description}`;
+                document.getElementById(`campaignQuantity-${campaignId}`).innerHTML = `<b>Số lượng chiến sĩ: </b> ${campaign.quantity}`;
+                document.getElementById(`campaignTime-${campaignId}`).innerHTML = `<b>Thời gian: </b> ${campaign.time}`;  // Hiển thị time dạng string
+                document.getElementById(`campaignCreatedAt-${campaignId}`).innerHTML = `<b>Chiến dịch được tạo lúc: </b> ${new Date(campaign.createdAt).toLocaleString()}`;
+                document.getElementById(`campaignStatus-${campaignId}`).innerHTML = `<b>Trạng thái: </b> ${campaign.status}`;
 
                 document.getElementById(`campaignDetailModal-${campaignId}`).style.display = "block";
             }
@@ -696,6 +736,45 @@ async function loadCampaignsTwo() {
 }
 // Gọi hàm loadCampaigns khi trang được tải
 window.onload = loadCampaignsTwo;
+</script>
+<script>
+    document.getElementById("log-out").addEventListener("click", function() {
+        window.location.replace("login.html"); });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const studentTableBodyOk = document.querySelector("#student-table-ok tbody");
+
+    // Gọi API để lấy danh sách sinh viên đã được chấp nhận
+    fetch('https://localhost:7009/api/Register/GetRegisterAccept')
+        .then(response => response.json())
+        .then(data => {
+            // Lặp qua dữ liệu và tạo hàng cho mỗi sinh viên đã chấp nhận
+            data.forEach(student => {
+                const row = document.createElement("tr");
+
+                // Thêm dữ liệu vào các cột trong bảng
+                row.innerHTML = `
+                    <td>${student.nameCampaign}</td>
+                    <td>${student.name}</td>
+                    <td>${student.mssv}</td>
+                    <td>${student.sdt}</td>
+                    <td>${student.email}</td>
+                    <td>${student.address}</td>
+                    <td>${student.sdtParent}</td>
+                    <td>${student.reason}</td>
+                    <td>${student.aim}</td>
+                `;
+
+                // Thêm hàng vào bảng
+                studentTableBodyOk.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Có lỗi xảy ra khi tải dữ liệu:', error);
+        });
+});
+
 </script>
 </body>
 </html>

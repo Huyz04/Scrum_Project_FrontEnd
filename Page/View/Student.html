@@ -56,7 +56,7 @@
             }
             h2 {
                 text-align: center;
-                margin-bottom: 20px;
+                margin-bottom: 0px;
                 font-weight: bold;
             }
             .btn-cancel, .btn-submit {
@@ -193,7 +193,7 @@
             <div class="hero-content">
                 <header>
                     <img src="/Public/assets/logo.png" alt="Mùa Hè Xanh 2025 Logo" class="logo">
-                    <h2>REGISTER CAMPAIGN</h2>
+                    <h2>ĐĂNG KÝ CHIẾN DỊCH</h2>
                 </header>
                 
                 <form action="#" method="post">
@@ -301,12 +301,19 @@ document.getElementById("registerForm").addEventListener("submit", function(even
 });
 
 </script>
-    <script>
-        fetch('/Page/Component/Header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-placeholder').innerHTML = data;
-            });
+<script>
+    fetch('/Page/Component/Header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-placeholder').innerHTML = data;
+            attachLogoutEvent(); // Gán sự kiện cho nút sau khi header được tải
+        });
+    
+    function attachLogoutEvent() {
+        document.getElementById("log-out").addEventListener("click", function() {
+            window.location.replace("login.html"); // Thay đổi "login.html" thành đường dẫn thực tế đến trang đăng nhập của bạn
+        });
+    }
     </script>
     <script>
         fetch('/Page/Component/Footer.html')
@@ -506,8 +513,6 @@ function closeAllModals() {
         }
     }
     //
-    
-
 </script>
 </body>
 </html>
