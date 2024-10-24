@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mùa Hè Xanh UIT 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Page/style.css">
+</head>
+
+<header class="header">
+    <img src="/Public/assets/logo.png" alt="Logo Mùa Hè Xanh" class="logo">
+    <h2> Mùa hè xanh UIT 2025</h2>
+    <input type="search" placeholder="Tìm kiếm..." class="search-bar">
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Phủ Xanh Mùa Hè<br>Cùng Mùa Hè Xanh</h1>
+            <p class="hero-text">Nơi những chiến sĩ áo xanh cùng nhau cống hiến tri thức trẻ,<br>góp phần dựng xây quê hương, đất nước vững mạnh.</p>
+            <button id = 'createCampaignBtn' class="create-project-btn">Tạo dự án</button>
+            <p class="hero-text">Đơn vị đồng hành</p>
+            
+            <div class="partner-icons">
+                <img src="/Public/assets/partners-logo/partner-1.png" alt="Partner 1">
+                <img src="/Public/assets/partners-logo/partner-2.png" alt="Partner 2">
+                <img src="/Public/assets/partners-logo/partner-3.png" alt="Partner 3">
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="/Public/assets/image.png" alt="Green Summer Activities">
+        </div>
+    </section>
+</main>
+</header>
+<style>
+.create-project-btn {
+    background-color: #4CAF50; /* Màu xanh lá */
+    color: white; /* Màu chữ */
+    border: none; /* Không có viền */
+    padding: 10px 20px; /* Khoảng cách bên trong */
+    text-align: center; /* Căn giữa chữ */
+    text-decoration: none; /* Không có gạch chân */
+    display: inline-block; /* Hiển thị như một khối inline */
+    font-size: 16px; /* Kích thước chữ */
+    margin: 4px 2px; /* Khoảng cách bên ngoài */
+    cursor: pointer; /* Con trỏ chuột thay đổi khi hover */
+    border-radius: 25px; /* Bo tròn góc nhiều hơn */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
+}
+
+.create-project-btn:hover {
+    background-color: #45a049; /* Màu xanh đậm hơn khi hover */
+}
+
+.dialog {
+            display: none; /* Ẩn dialog ban đầu */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+        }
+        .overlay {
+            display: none; /* Ẩn overlay ban đầu */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 900;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .btn-cancel, .btn-submit {
+            width: 48%;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .btn-cancel {
+            background-color: #ff4d4d;
+            border: none;
+            color: white;
+        }
+        .btn-submit {
+            background-color: #28a745;
+            border: none;
+            color: white;
+        }
+        .btn-cancel:hover {
+            background-color: #ff1a1a;
+        }
+        .btn-submit:hover {
+            background-color: #218838;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            display: none;
+            margin-top: 5px;
+        }
+
+</style>
+<!-- CSS tùy chọn để hiển thị dialog modal -->
+<style>
+    .modal {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+      text-align: center;
+    }
+    .close-button {
+      cursor: pointer;
+      color: red;
+      font-size: 20px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  </style>
+  <style>
+  /* Styles cho modal */
+  .modal {
+      display: none; /* Ẩn modal theo mặc định */
+      position: fixed; /* Đặt vị trí cố định */
+      z-index: 1000; /* Đặt z-index cao để đảm bảo modal nằm trên các phần khác */
+      left: 0;
+      top: 0;
+      width: 100%; /* Chiếm toàn bộ chiều rộng */
+      height: 100%; /* Chiếm toàn bộ chiều cao */
+      overflow: auto; /* Thêm cuộn nếu cần */
+      background-color: rgba(0, 0, 0, 0.5); /* Nền mờ */
+  }
+  
+  /* Styles cho nội dung modal */
+  .modal-content {
+      background-color: #fefefe; /* Nền trắng cho nội dung modal */
+      margin: 15% auto; /* Căn giữa theo chiều dọc */
+      padding: 20px; /* Thêm khoảng cách bên trong */
+      border: 1px solid #888; /* Đường viền */
+      width: 100%; /* Chiều rộng của modal */
+      max-width: 800px; /* Chiều rộng tối đa của modal */
+      border-radius: 8px; /* Bo tròn góc */
+  }
+  
+  /* Styles cho nút đóng */
+  .close-button {
+      color: #aaa; /* Màu xám cho nút đóng */
+      float: right; /* Đưa nút đóng sang bên phải */
+      font-size: 28px; /* Kích thước chữ cho nút đóng */
+      font-weight: bold; /* Chữ đậm cho nút đóng */
+  }
+  
+  /* Styles cho nút đóng khi hover */
+  .close-button:hover,
+  .close-button:focus {
+      color: black; /* Đổi màu khi hover */
+      text-decoration: none; /* Bỏ gạch chân */
+      cursor: pointer; /* Hiển thị con trỏ khi hover */
+  }
+  
+  /* Styles cho tiêu đề */
+  h3 {
+      margin: 0; /* Bỏ margin cho tiêu đề */
+  }
+  
+  /* Styles cho thông tin trong modal */
+  p {
+      font-size: 16px; /* Kích thước chữ cho thông tin */
+      margin: 8px 0; /* Khoảng cách giữa các đoạn */
+  }
+</style>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .campaigns-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .campaigns-title h2 {
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    table, th, td {
+        border: 1px solid #ccc;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+<body>
+    <header id="header-placeholder"></header>
+
+        <section class="campaigns">
+            <div class="campaigns-header">
+                <div class="campaigns-title">
+                    <span class="category-label">Mùa Hè Xanh UIT</span>
+                    <br></br>
+                    <h2>Các Chiến Dịch ĐÃ DUYỆT</h2>
+                </div>
+            </div>
+            
+            <div id="campaignGrid" class="campaign-grid"></div>
+
+            <!-- Dialog modal sẽ được tạo động cho từng chiến dịch -->
+            <div id="modalContainer"></div>
+
+            </div>
+
+            <div class="campaigns-header">
+                <div class="campaigns-title">
+                    <br></br>
+                    <h2>Các Chiến Dịch CHỜ DUYỆT</h2>
+                </div>
+            </div>
+            
+            <div id="campaignGridWaiting" class="campaign-grid"></div>
+
+            <!-- Dialog modal sẽ được tạo động cho từng chiến dịch -->
+            <div id="modalContainerWaiting"></div>
+
+            <div class="campaigns-header">
+                <div class="campaigns-title">
+                    <br></br>
+                    <h2>Các Sinh viên CHỜ DUYỆT</h2>
+                </div>
+            </div>
+            <table id="student-table">
+                <thead>
+                    <tr>
+                        <th>Chiến dịch</th>
+                        <th>Tên</th>
+                        <th>MSSV</th>
+                        <th>SĐT</th>
+                        <th>Email</th>
+                        <th>Địa chỉ</th>
+                        <th>SĐT Phụ huynh</th>
+                        <th>Lý do tham gia</th>
+                        <th>Mục tiêu</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Nội dung sinh viên sẽ được thêm bằng JavaScript -->
+                </tbody>
+            </table>
+        </section>
+        <footer id="footer-placeholder"></footer>
+    </main>
+    <div class="overlay" id="overlay"></div>
+    <div class="dialog" id="dialog">
+        <h2>Tạo Chiến dịch</h2>
+        <form id="campaignForm">
+            <div class="mb-3">
+                <label for="campaignName" class="form-label">Tên của chiến dịch:</label>
+                <input type="text" class="form-control" id="campaignNamee" placeholder="Nhập tên của chiến dịch" required>
+            </div>
+            <div class="mb-3">
+                <label for="startDate" class="form-label">Ngày bắt đầu:</label>
+                <input type="date" class="form-control" id="startDate" required>
+            </div>
+            <div class="mb-3">
+                <label for="endDate" class="form-label">Ngày kết thúc:</label>
+                <input type="date" class="form-control" id="endDate" required>
+            </div>
+            <div class="mb-3">
+                <label for="participants" class="form-label">Số lượng:</label>
+                <input type="number" class="form-control" id="participants" placeholder="Nhập số người" min="1" required>
+                <div class="error-message" id="participantError">Số lượng không được âm!</div>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Địa điểm:</label>
+                <input type="text" class="form-control" id="location" placeholder="Nhập vị trí" required>
+            </div>
+            <div class="mb-3">
+                <label for="University" class="form-label">Yêu cầu trường Đại học:</label>
+                <select class="form-control" id="University" required>
+                    <option value="Đại học Công Nghệ Thông tin - UIT">Đại học Công Nghệ Thông tin - UIT</option>
+                    <option value="Không giới hạn">Không giới hạn</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Mô tả:</label>
+                <textarea class="form-control" id="description" rows="3" placeholder="Nhập mô tả" required></textarea>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-cancel" id="cancelBtn">Hủy</button>
+                <button type="submit" class="btn btn-submit">Hoàn thành</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        fetch('/Page/Component/Footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+            document.addEventListener("DOMContentLoaded", function() {
+    const studentTableBody = document.querySelector("#student-table tbody");
+
+    // Gọi API để lấy danh sách sinh viên
+    fetch('https://localhost:7009/api/Register')
+        .then(response => response.json())
+        .then(data => {
+            // Lặp qua dữ liệu và tạo hàng cho mỗi sinh viên
+            data.forEach(student => {
+                const row = document.createElement("tr");
+
+                // Ẩn ID của sinh viên nhưng vẫn lưu trong dataset để sử dụng khi cần
+                row.dataset.studentId = student.id;
+
+                // Thêm dữ liệu vào các cột trong bảng
+                row.innerHTML = `
+                    <td>${student.nameCampaign}</td>
+                    <td>${student.name}</td>
+                    <td>${student.mssv}</td>
+                    <td>${student.sdt}</td>
+                    <td>${student.email}</td>
+                    <td>${student.address}</td>
+                    <td>${student.sdtParent}</td>
+                    <td>${student.reason}</td>
+                    <td>${student.aim}</td>
+                    <td>${student.aim}</td>
+                `;
+
+                // Thêm hàng vào bảng
+                studentTableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error("Lỗi khi gọi API:", error));
+});
+
+    </script>
+     <script>
+        
+        // Hiển thị dialog khi nhấn nút "Tạo chiến dịch"
+        const createCampaignBtn = document.getElementById('createCampaignBtn');
+        const overlay = document.getElementById('overlay');
+        const dialog = document.getElementById('dialog');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        const participantInput = document.getElementById('participants');
+        const participantError = document.getElementById('participantError');
+        const form = document.getElementById('campaignForm');
+
+        createCampaignBtn.addEventListener('click', function() {
+            overlay.style.display = 'block'; // Hiện overlay
+            dialog.style.display = 'block'; // Hiện dialog
+        });
+
+        cancelBtn.addEventListener('click', function() {
+            overlay.style.display = 'none'; // Ẩn overlay
+            dialog.style.display = 'none'; // Ẩn dialog
+        });
+
+        // Không cho phép chọn ngày trong quá khứ
+        const today = new Date().toISOString().split('T')[0];
+        startDateInput.setAttribute('min', today);
+        endDateInput.setAttribute('min', today);
+
+        // Đảm bảo ngày kết thúc không nhỏ hơn ngày bắt đầu
+        startDateInput.addEventListener('change', function() {
+            endDateInput.setAttribute('min', this.value);
+        });
+
+        // Kiểm tra số lượng không được âm
+        participantInput.addEventListener('input', function() {
+            if (this.value < 0) {
+                participantError.style.display = 'block'; // Hiển thị thông báo lỗi
+                this.classList.add('is-invalid'); // Thêm lớp bootstrap báo lỗi
+            } else {
+                participantError.style.display = 'none'; // Ẩn thông báo lỗi nếu đúng
+                this.classList.remove('is-invalid'); // Loại bỏ lớp báo lỗi
+            }
+        });
+
+        // Chặn gửi form nếu có lỗi
+        form.addEventListener('submit', function(event) {
+            if (participantInput.value < 0) {
+                event.preventDefault(); // Ngăn không cho gửi form
+            } else {
+                cancelBtn.click(); // Ẩn dialog sau khi gửi form
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+FniFNJ+zIFpbhrvY4hZfME6fI6q" crossorigin="anonymous"></script>
+    <script>
+        // Hàm lấy dữ liệu từ API và hiển thị các campaign card
+        async function loadCampaigns() {
+    try {
+        const response = await fetch('https://localhost:7009/api/Campaign/CampaignOnGoing');  // Gọi API
+        const campaigns = await response.json();  // Chuyển dữ liệu JSON thành mảng object
+        const campaignGrid = document.getElementById("campaignGrid");
+        const modalContainer = document.getElementById("modalContainer");
+
+        campaignGrid.innerHTML = "";  // Xóa nội dung cũ nếu có
+        modalContainer.innerHTML = "";  // Xóa nội dung modal cũ nếu có
+
+        // Duyệt qua từng chiến dịch và tạo card
+        campaigns.forEach(campaign => {
+            const card = document.createElement("div");
+            card.className = "campaign-card";
+            card.innerHTML = `
+                <img src="/Public/Logo/campaign.png" alt="${campaign.name}">
+                <div class="campaign-info">
+                    <h3>${campaign.name}</h3>
+                    <div class="date-container">
+                        <span class="calendar-icon">📅</span>
+                        <span class="campaign-date">${campaign.time}</span>
+                    </div>
+                    <a href="#" class="register-button" onclick="openModal('${campaign.id}')">Xem Chi Tiết</a>
+                </div>
+            `;
+            campaignGrid.appendChild(card);
+
+            // Tạo modal cho từng chiến dịch
+            const modal = document.createElement("div");
+            modal.id = `campaignDetailModal-${campaign.id}`;
+            modal.style.display = "none";
+            modal.className = "modal";
+            modal.innerHTML = `
+                <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="campaignName-${campaign.id}">${campaign.name}</h5>
+        <button type="button" class="close" onclick="closeModal('${campaign.id}')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p id="campaignUniversity-${campaign.id}"></p>
+        <p id="campaignDescription-${campaign.id}"></p>
+        <p id="campaignQuantity-${campaign.id}"></p>
+        <p id="campaignTime-${campaign.id}"></p>
+        <p id="campaignCreatedAt-${campaign.id}"></p>
+        <p id="campaignStatus-${campaign.id}"></p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('${campaign.id}')">Đóng</button>
+    </div>
+</div>
+
+            `;
+            modalContainer.appendChild(modal);
+        });
+    } catch (error) {
+        console.error("Có lỗi xảy ra khi lấy dữ liệu từ API:", error);
+    }
+}
+
+// Hàm mở modal và hiển thị chi tiết chiến dịch
+function openModal(campaignId) {
+    fetch('https://localhost:7009/api/Campaign')
+        .then(response => response.json())
+        .then(campaigns => {
+            const campaign = campaigns.find(c => c.id === campaignId);
+            if (campaign) {
+                document.getElementById(`campaignName-${campaignId}`).innerText = `Tên đội hình: ${campaign.name}`;
+                document.getElementById(`campaignUniversity-${campaignId}`).innerText = `Trường Đại học: ${campaign.university}`;
+                document.getElementById(`campaignDescription-${campaignId}`).innerText = `Mô tả: ${campaign.description}`;
+                document.getElementById(`campaignQuantity-${campaignId}`).innerText = `Số lượng chiến sĩ: ${campaign.quantity}`;
+                document.getElementById(`campaignTime-${campaignId}`).innerText = `Thời gian: ${campaign.time}`;  // Hiển thị time dạng string
+                document.getElementById(`campaignCreatedAt-${campaignId}`).innerText = `Chiến dịch được tạo lúc: ${new Date(campaign.createdAt).toLocaleString()}`;
+                document.getElementById(`campaignStatus-${campaignId}`).innerText = `Trạng thái: ${campaign.status}`;
+
+                document.getElementById(`campaignDetailModal-${campaignId}`).style.display = "block";
+            }
+        })
+        .catch(error => console.error('Error fetching campaign details:', error));
+}
+
+// Hàm đóng modal
+function closeModal(campaignId) {
+    document.getElementById(`campaignDetailModal-${campaignId}`).style.display = "none";
+}
+
+// Gọi hàm loadCampaigns khi trang được tải
+window.onload = loadCampaigns;
+
+        document.getElementById('campaignForm').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Ngăn không cho form gửi đi theo cách mặc định
+
+    // Lấy dữ liệu từ các trường trong form
+    const campaignData = {
+        name: document.getElementById('campaignNamee').value,
+        university: document.getElementById('University').value,
+        timeStart: document.getElementById('startDate').value,
+        timeEnd: document.getElementById('endDate').value,
+        quantity: document.getElementById('participants').value,
+        description: document.getElementById('description').value,
+        location: document.getElementById('location').value
+    };
+
+    try {
+        // Gửi yêu cầu POST đến API
+        const response = await fetch('https://localhost:7009/api/Campaign', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(campaignData)
+        });
+
+        if (response.ok) {
+            // Xử lý khi thành công
+            alert('Chiến dịch đã được tạo thành công!');
+            document.getElementById('cancelBtn').click(); // Đóng dialog sau khi tạo thành công
+        } else {
+            // Xử lý khi có lỗi từ API
+            const errorMessage = await response.json();
+            alert(`Có lỗi xảy ra: ${errorMessage.message || 'Không thể tạo chiến dịch'}`);
+        }
+    } catch (error) {
+        // Xử lý lỗi mạng hoặc lỗi hệ thống
+        alert(`Có lỗi xảy ra: ${error.message}`);
+    }
+});
+
+      </script>
+      <script>
+        // Hàm lấy dữ liệu từ API và hiển thị các campaign card
+        async function loadCampaignsWaiting() {
+    try {
+        const response = await fetch('https://localhost:7009/api/Campaign/CampaignWaiting');  // Gọi API
+        const campaigns = await response.json();  // Chuyển dữ liệu JSON thành mảng object
+        const campaignGrid = document.getElementById("campaignGridWaiting");
+        const modalContainer = document.getElementById("modalContainerWaiting");
+
+        campaignGrid.innerHTML = "";  // Xóa nội dung cũ nếu có
+        modalContainer.innerHTML = "";  // Xóa nội dung modal cũ nếu có
+
+        // Duyệt qua từng chiến dịch và tạo card
+        campaigns.forEach(campaign => {
+            const card = document.createElement("div");
+            card.className = "campaign-card";
+            card.innerHTML = `
+                <img src="/Public/Logo/campaign.png" alt="${campaign.name}">
+                <div class="campaign-info">
+                    <h3>${campaign.name}</h3>
+                    <div class="date-container">
+                        <span class="calendar-icon">📅</span>
+                        <span class="campaign-date">${campaign.time}</span>
+                    </div>
+                    <a href="#" class="register-button" onclick="openModal('${campaign.id}')">Xem Chi Tiết</a>
+                </div>
+            `;
+            campaignGrid.appendChild(card);
+
+            // Tạo modal cho từng chiến dịch
+            const modal = document.createElement("div");
+            modal.id = `campaignDetailModal-${campaign.id}`;
+            modal.style.display = "none";
+            modal.className = "modal";
+            modal.innerHTML = `
+                <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="campaignName-${campaign.id}">${campaign.name}</h5>
+        <button type="button" class="close" onclick="closeModal('${campaign.id}')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p id="campaignUniversity-${campaign.id}"></p>
+        <p id="campaignDescription-${campaign.id}"></p>
+        <p id="campaignQuantity-${campaign.id}"></p>
+        <p id="campaignTime-${campaign.id}"></p>
+        <p id="campaignCreatedAt-${campaign.id}"></p>
+        <p id="campaignStatus-${campaign.id}"></p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('${campaign.id}')">Đóng</button>
+    </div>
+</div>
+
+            `;
+            modalContainer.appendChild(modal);
+        });
+    } catch (error) {
+        console.error("Có lỗi xảy ra khi lấy dữ liệu từ API:", error);
+    }
+}
+
+// Hàm mở modal và hiển thị chi tiết chiến dịch
+function openModal(campaignId) {
+    fetch('https://localhost:7009/api/Campaign')
+        .then(response => response.json())
+        .then(campaigns => {
+            const campaign = campaigns.find(c => c.id === campaignId);
+            if (campaign) {
+                document.getElementById(`campaignName-${campaignId}`).innerText = `Tên đội hình: ${campaign.name}`;
+                document.getElementById(`campaignUniversity-${campaignId}`).innerText = `Trường Đại học: ${campaign.university}`;
+                document.getElementById(`campaignDescription-${campaignId}`).innerText = `Mô tả: ${campaign.description}`;
+                document.getElementById(`campaignQuantity-${campaignId}`).innerText = `Số lượng chiến sĩ: ${campaign.quantity}`;
+                document.getElementById(`campaignTime-${campaignId}`).innerText = `Thời gian: ${campaign.time}`;  // Hiển thị time dạng string
+                document.getElementById(`campaignCreatedAt-${campaignId}`).innerText = `Chiến dịch được tạo lúc: ${new Date(campaign.createdAt).toLocaleString()}`;
+                document.getElementById(`campaignStatus-${campaignId}`).innerText = `Trạng thái: ${campaign.status}`;
+
+                document.getElementById(`campaignDetailModal-${campaignId}`).style.display = "block";
+            }
+        })
+        .catch(error => console.error('Error fetching campaign details:', error));
+}
+
+// Hàm đóng modal
+function closeModal(campaignId) {
+    document.getElementById(`campaignDetailModal-${campaignId}`).style.display = "none";
+}
+
+// Hàm kết hợp gọi cả hai API
+async function loadCampaignsTwo() {
+    await Promise.all([loadCampaigns(), loadCampaignsWaiting()]); // Chạy cả hai API
+}
+// Gọi hàm loadCampaigns khi trang được tải
+window.onload = loadCampaignsTwo;
+</script>
+</body>
+</html>
