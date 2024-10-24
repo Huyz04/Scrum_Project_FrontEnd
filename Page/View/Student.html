@@ -193,22 +193,23 @@
             <div class="hero-content">
                 <header>
                     <img src="/Public/assets/logo.png" alt="Mùa Hè Xanh 2025 Logo" class="logo">
-                    <h2>ĐĂNG KÍ CHIẾN SĨ</h2>
+                    <h2>REGISTER CAMPAIGN</h2>
                 </header>
-
+                
                 <form action="#" method="post">
+                    <input type="text" id="campaignId" hidden required>
                     <div class="form-group">
-                        <label for="hoTen">Họ Tên</label>
-                        <input type="text" id="hoTen" name="hoTen" required>
+                        <label for="name">Họ Tên</label>
+                        <input type="text" id="name" name="name" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="mssv">MSSV</label>
+                        <label for="mssv">Mã số Sinh viên</label>
                         <input type="text" id="mssv" name="mssv" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="sdt">SĐT</label>
+                        <label for="sdt">Số điện thoại</label>
                         <input type="tel" id="sdt" name="sdt" required>
                     </div>
 
@@ -218,37 +219,88 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="khoa">Khoa</label>
-                        <input type="text" id="khoa" name="khoa" required>
+                        <label for="address">Địa chỉ</label>
+                        <input type="text" id="address" name="address" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="diaChi">Địa chỉ thường trú</label>
-                        <input type="text" id="diaChi" name="diaChi" required>
+                        <label for="sdtParent">Số điện thoại gia đình</label>
+                        <input type="tel" id="sdtParent" name="sdtParent" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="sdtNguoiThan">SĐT người thân</label>
-                        <input type="tel" id="sdtNguoiThan" name="sdtNguoiThan" required>
+                        <label for="reason">Lý do muốn đăng ký</label>
+                        <input type="text" id="reason" name="reason" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="liDo">Lí do tham gia chiến dịch</label>
-                        <input type="text" id="liDo" name="liDo" required>
+                        <label for="aim">Mục tiêu muốn đạt được</label>
+                        <textarea id="aim" name="aim" rows="3" required></textarea>
                     </div>
 
-                    <div class="form-group">
-                        <label for="nguyenVong">Nguyện vọng</label>
-                        <textarea id="nguyenVong" name="nguyenVong" rows="3" required></textarea>
-                    </div>
-
-                    <button type="submit" class="register-button">Đăng kí</button>
+                    <button type="submit" class="register-button">Đăng ký</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
+<script>
+    // Lấy form và gắn sự kiện submit
+document.getElementById("registerForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Ngăn form tự động submit để có thể xử lý thủ công
+
+    // Kiểm tra sự kiện đã được kích hoạt
+    alert("Form submit event triggered!");
+
+    // Lấy giá trị từ các trường nhập liệu
+    const name = document.getElementById("hoTen").value;
+    const sdt = document.getElementById("sdt").value;
+    const email = document.getElementById("email").value;
+    const address = document.getElementById("diaChi").value;
+    const sdtParent = document.getElementById("sdtNguoiThan").value;
+    const reason = document.getElementById("liDo").value;
+    const aim = document.getElementById("nguyenVong").value;
+    const mssv = document.getElementById("mssv").value;
+    const campaignId = document.getElementById("campaignId").value;
+
+    // Tạo body của request
+    const requestBody = {
+        name: name,
+        sdt: sdt,
+        email: email,
+        address: address,
+        sdtParent: sdtParent,
+        reason: reason,
+        aim: aim,
+        mssv: mssv,
+        campaignId: campaignId
+    };
+
+    // Gửi request POST đến API
+    fetch('https://localhost:7009/api/Register/RegisterCampaign', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody), // Chuyển đổi object thành JSON
+    })
+    .then(response => response.json()) // Chuyển đổi phản hồi thành JSON
+    .then(data => {
+        // Xử lý phản hồi từ API
+        if (data.success) {
+            alert("Thành công: " + data.data); // Hiển thị thông báo thành công
+        } else {
+            alert("Lỗi: Đăng ký không thành công!"); // Hiển thị thông báo lỗi
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("Lỗi: Không thể kết nối đến API!"); // Hiển thị thông báo lỗi nếu có sự cố
+    });
+});
+
+</script>
     <script>
         fetch('/Page/Component/Header.html')
             .then(response => response.text())
@@ -344,7 +396,9 @@ function openModal(campaignId) {
                 document.getElementById(`campaignTime-${campaignId}`).innerText = `Thời gian: ${campaign.time}`;  // Hiển thị time dạng string
                 document.getElementById(`campaignCreatedAt-${campaignId}`).innerText = `Chiến dịch được tạo lúc: ${new Date(campaign.createdAt).toLocaleString()}`;
                 document.getElementById(`campaignStatus-${campaignId}`).innerText = `Trạng thái: ${campaign.status}`;
-
+                
+                document.getElementById('campaignId').value = campaignId;
+                
                 document.getElementById(`campaignDetailModal-${campaignId}`).style.display = "block";
             }
         })
@@ -358,13 +412,81 @@ function closeModal(campaignId) {
 
 // Gọi hàm loadCampaigns khi trang được tải
 window.onload = loadCampaigns;
+
+document.querySelector(".register-button").addEventListener("click", function (event) {
+    event.preventDefault();
+
+    // Lấy dữ liệu từ form
+    const name = document.getElementById("name").value;
+    const sdt = document.getElementById("sdt").value;
+    const email = document.getElementById("email").value;
+    const address = document.getElementById("address").value;
+    const sdtParent = document.getElementById("sdtParent").value;
+    const reason = document.getElementById("reason").value;
+    const aim = document.getElementById("aim").value;
+    const mssv = document.getElementById("mssv").value;
+    const campaignId = document.getElementById("campaignId").value;
+
+    // Kiểm tra các giá trị có rỗng hay không
+    if (!name || !sdt || !email || !address || !sdtParent || !reason || !aim || !mssv || !campaignId) {
+        alert("Vui lòng điền đầy đủ thông tin");
+        return;
+    }
+
+    // Tạo body cho yêu cầu POST
+    const data = {
+        name: name,
+        sdt: sdt,
+        email: email,
+        address: address,
+        sdtParent: sdtParent,
+        reason: reason,
+        aim: aim,
+        mssv: mssv,
+        campaignId: campaignId
+    };
+
+    // Gửi yêu cầu POST
+    fetch("https://localhost:7009/api/Register/RegisterCampaign", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(result => {
+        // Kiểm tra phản hồi từ API
+        if (result.success) {
+            alert("Thành công: " + result.data);
+            // Gọi hàm này khi bạn muốn đóng tất cả các hộp thoại
+            closeAllModals();           
+        } else {
+            alert("Lỗi: "+result.data);
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Đã xảy ra lỗi khi gửi yêu cầu");
+    });
+});
+function closeAllModals() {
+    // Lấy tất cả các phần tử có lớp "modal"
+    var modals = document.querySelectorAll('.modal');
+    
+    // Lặp qua các phần tử và đặt display thành "none" để đóng
+    modals.forEach(function(modal) {
+        modal.style.display = "none";
+    });
+}
+
+
 </script>
 <script>
     // Lấy modal
     var modal = document.getElementById("registerDialog");
 
     function approveCampaign(campaignId) {
-        alert("hello");
     document.getElementById(`campaignDetailModal-${campaignId}`).style.display = "none";
     modal.style.display = "block";            
 }
@@ -383,6 +505,9 @@ window.onload = loadCampaigns;
             modal.style.display = "none";
         }
     }
+    //
+    
+
 </script>
 </body>
 </html>
